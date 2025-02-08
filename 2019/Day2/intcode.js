@@ -44,14 +44,11 @@ const solvePuzzle = (puzzle) => {
       let code = [...puzzle];
       updateCode(code, noun, verb);
       code = executeCode(code);
-
       if (code[0] === 19690720) {
         return code;
       }
-
       verb += 1;
     }
-
     noun += 1;
   }
 };
