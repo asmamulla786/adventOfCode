@@ -1,13 +1,18 @@
-const areDoubleDigitsThere = (password) => {
-  let index = 0;
-  while (index < password.length - 1) {
-    if (password[index] === password[index + 1]) {
-      return true;
-    }
-    index += 1;
+const countDigits = (countObject, digit) => {
+  if (!(digit in countObject)) {
+    countObject[digit] = 0;
   }
+  countObject[digit] += 1;
+  return countObject;
+};
 
-  return true;
+const isExactlyDigitAppearsTwise = (digitsCount) => {
+  return Object.values(digitsCount).some((count) => count === 2);
+};
+
+const areDoubleDigitsThere = (password) => {
+  const digitsCount = password.reduce(countDigits, {});
+  return isExactlyDigitAppearsTwise(digitsCount);
 };
 
 const areDigitsIncOrder = (password) => {
@@ -22,7 +27,7 @@ const areDigitsIncOrder = (password) => {
 
 const isMeetsCriteria = (password) => {
   const digits = Array.from(password + "");
-  return areDoubleDigitsThere(digits) && areDigitsIncOrder(digits);
+  return areDigitsIncOrder(digits) && areDoubleDigitsThere(digits);
 };
 
 const noOfPasswords = (start, end) => {
@@ -36,5 +41,9 @@ const noOfPasswords = (start, end) => {
 
   return count;
 };
-
 console.log(noOfPasswords(248345, 746315));
+
+console.log(isMeetsCriteria("111122")); // Should be true
+console.log(isMeetsCriteria("111111")); // Should be false
+console.log(isMeetsCriteria("112233")); // Should be true
+console.log(isMeetsCriteria("123444")); // Should be false
